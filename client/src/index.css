@@ -25,7 +25,7 @@
   }
 
   .button-gradient {
-    background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
+    background: linear-gradient(to right, #000000, #1a1a1a, #333333);
     transition: opacity 0.3s ease;
   }
 
@@ -64,6 +64,28 @@
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+/* Resource Row Animation */
+.group {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.group:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8));
+  z-index: 10;
+}
+
+.group:active {
+  transform: scale(0.99);
+  transition: transform 0.1s ease;
+}
+
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
 }
 
   .button-gradient:hover {
@@ -107,6 +129,80 @@
   .animate-bounce {
     animation: bounce 1s ease infinite;
   }
+  /* Step Indicator Animations */
+.step-item {
+  transition: all 0.3s ease-in-out;
+}
+
+.step-item .step-circle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-item.active .step-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(104, 102, 193, 0.3);
+}
+
+.step-item .step-line {
+  transition: background-color 0.5s ease;
+  @apply w-full h-1 absolute top-5 left-0 -z-10;
+}
+
+.step-item span {
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.step-item.active span {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.step-item.completed .step-line {
+  @apply bg-green-500;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-item.completed .step-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: lightning 1.5s infinite;
+}
+
+@keyframes lightning {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.step-item.completed .step-circle,
+.step-item.active .step-circle {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(104, 102, 193, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(104, 102, 193, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(104, 102, 193, 0);
+  }
+}
 }
 
 /* === Keyframes === */

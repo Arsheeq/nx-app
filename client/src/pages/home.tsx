@@ -59,10 +59,7 @@ export default function Home() {
   const steps = getSteps(reportType);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [formAccountName, setFormAccountName] = useState(
-    accountName ||
-      (cloudProvider === "AWS" ? "My AWS Account" : "My Azure Account"),
-  );
+  const [formAccountName, setFormAccountName] = useState(accountName || "");
 
   // Form state for AWS credentials
   const [formAwsAccessKey, setFormAwsAccessKey] = useState(awsAccessKeyId);
@@ -400,7 +397,7 @@ export default function Home() {
         return (
           <section>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gradient">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent inline-block">
                 Enter {cloudProvider} Credentials
               </h2>
               <p className="text-gray-500 mt-2">
@@ -418,8 +415,8 @@ export default function Home() {
                     type="text"
                     placeholder={
                       cloudProvider === "AWS"
-                        ? "My AWS Account"
-                        : "My Azure Account"
+                        ? "Enter AWS Account Name"
+                        : "Enter Azure Account Name"
                     }
                     value={formAccountName}
                     onChange={(e) => setFormAccountName(e.target.value)}
@@ -602,7 +599,7 @@ export default function Home() {
         return (
           <section>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gradient">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent inline-block">
                 Select Resources
               </h2>
               <p className="text-gray-500 mt-2">

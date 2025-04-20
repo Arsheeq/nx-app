@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
         <div className="flex items-center gap-2">
           <NubinixLogo height={24} />
           <span className="text-sm text-white">
-            © {new Date().getFullYear()} Nubinix Cloud Insights. All rights reserved.
+            © {new Date().getFullYear()} Nubinix. All rights reserved.
           </span>
         </div>
         <div className="flex gap-6">
