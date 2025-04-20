@@ -83,7 +83,7 @@ export const CloudProviderSelector: React.FC = () => {
       {cloudProvider && (
         <div className="flex justify-end mt-8">
           <Button
-            className="button-bubble"
+            className="button-black-bubble"
             onClick={nextStep}
           >
             Next

@@ -2,72 +2,165 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === Utilities Layer === */
 @layer utilities {
   .text-gradient {
     @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent;
   }
-}
 
-.card-hover {
-  transition: all 0.3s ease;
-}
+  .card-hover {
+    transition: all 0.3s ease;
+  }
 
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .selected-card {
+    border-color: #3DB3E3;
+    background: linear-gradient(to bottom right,
+        rgba(61, 179, 227, 0.1),
+        rgba(104, 102, 193, 0.1));
+  }
+
+  .button-gradient {
+    background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
+    transition: opacity 0.3s ease;
+  }
+
 
 .selected-card {
   border-color: #3DB3E3;
-  background: linear-gradient(to bottom right, rgba(61, 179, 227, 0.1), rgba(104, 102, 193, 0.1));
+  background: linear-gradient(to bottom right,
+      rgba(61, 179, 227, 0.1),
+      rgba(104, 102, 193, 0.1));
+  transform: translateY(-2px);
 }
 
-.button-gradient {
-  background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
-  transition: opacity 0.3s ease;
+.card:hover svg {
+  transform: scale(1.1);
 }
 
-.button-gradient:hover {
-  opacity: 0.9;
-
-/* Logo bounce animation */
-.logo-bounce {
-  transition: transform 0.2s ease-in-out;
+.card svg {
+  transition: all 0.3s ease;
 }
 
-.group:hover .logo-bounce {
-  transform: translateY(-5px);
+.card {
+  transition: all 0.3s ease-in-out;
 }
 
-/* Button bubble effect */
-.button-bubble {
-  background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
-  color: white;
-  transition: transform 0.2s ease-in-out;
-}
-
-.button-bubble:hover {
+.card:hover {
   transform: scale(1.05);
-  opacity: 0.9;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: rgba(var(--primary), 0.5);
 }
 
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.step-animation {
-  animation: fadeIn 0.5s ease-out;
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
+  .button-gradient:hover {
+    opacity: 0.9;
+  }
+
+  .button-black-bubble {
+    background: linear-gradient(to right, #000000, #1a1a1a, #333333);
+    color: white;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+  }
+
+  .button-black-bubble:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  .logo-bounce {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .group:hover .logo-bounce {
+    transform: translateY(-5px);
+  }
+
+  .button-bubble {
+    background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
+    color: white;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .button-bubble:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  .step-animation {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-bounce {
+    animation: bounce 1s ease infinite;
+  }
+}
+
+/* === Keyframes === */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2);
+  }
+
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* === Hover Animations === */
+.group:hover {
+  animation: bubble 0.5s ease-in-out;
+}
+
+.group:hover .logo-bounce {
+  animation: bounce 0.5s ease-in-out infinite;
+}
+
+/* === Base Layer === */
 @layer base {
   * {
     @apply border-border;
@@ -78,43 +171,7 @@
   }
 }
 
-/* Bubble animation for resource selection */
-@keyframes bubble {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2);
-  }
-  50% {
-    transform: scale(1.03);
-    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-  }
-}
-
-.group:hover {
-  animation: bubble 0.5s ease-in-out;
-}
-
-.group:hover .logo-bounce {
-  animation: bounce 0.5s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-bounce {
-  animation: bounce 1s ease infinite;
-}
-
+/* === Components Layer === */
 @layer components {
   .text-gradient {
     @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent;
