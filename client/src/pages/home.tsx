@@ -6,6 +6,7 @@ import { StepIndicator } from "@/components/StepIndicator";
 import { CloudProviderSelector } from "@/components/CloudProviderCard";
 import { ReportTypeSelector } from "@/components/ReportTypeCard";
 import { ResourceTable } from "@/components/ResourceTable";
+import { FrequencySelection } from "@/components/FrequencySelection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -611,101 +612,13 @@ export default function Home() {
         );
 
       case "frequency":
-        return (
-          <section>
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gradient">
-                Select Report Frequency
-              </h2>
-              <p className="text-gray-500 mt-2">
-                Choose how often you want to collect resource metrics
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              <RadioGroup
-                value={frequency}
-                onValueChange={(value) =>
-                  setFrequency(value as "daily" | "weekly")
-                }
-                className="space-y-4"
-              >
-                <div className="bg-white border rounded-lg p-6 hover:shadow-md cursor-pointer transition">
-                  <div className="flex items-center mb-4">
-                    <RadioGroupItem
-                      value="daily"
-                      id="daily"
-                      className="h-4 w-4"
-                    />
-                    <Label htmlFor="daily" className="ml-2 text-lg font-medium">
-                      Daily Report
-                    </Label>
-                  </div>
-                  <div className="ml-6">
-                    <p className="text-gray-600 mb-3">
-                      Collect resource metrics for the last 24 hours.
-                    </p>
-                    <ul className="text-sm text-gray-700 space-y-2">
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        Detailed hourly breakdown
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        Perfect for daily operational reviews
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        Smaller PDF file size
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-white border rounded-lg p-6 hover:shadow-md cursor-pointer transition">
-                  <div className="flex items-center mb-4">
-                    <RadioGroupItem
-                      value="weekly"
-                      id="weekly"
-                      className="h-4 w-4"
-                    />
-                    <Label
-                      htmlFor="weekly"
-                      className="ml-2 text-lg font-medium"
-                    >
-                      Weekly Report
-                    </Label>
-                  </div>
-                  <div className="ml-6">
-                    <p className="text-gray-600 mb-3">
-                      Collect resource metrics for the last 7 days.
-                    </p>
-                    <ul className="text-sm text-gray-700 space-y-2">
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        Weekly trend analysis
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        Ideal for capacity planning
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-[#3DB3E3] flex-shrink-0 mr-1.5" />
-                        More comprehensive metrics
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </RadioGroup>
-            </div>
-          </section>
-        );
+        return <FrequencySelection />;
 
       case "generate":
         return (
           <section>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gradient">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent inline-block">
                 Generate Report
               </h2>
               <p className="text-gray-500 mt-2">

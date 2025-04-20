@@ -162,6 +162,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const account = await storage.getCloudAccount(reportData.cloudAccountId);
       const accountName = account?.name || `${provider} Account`;
       
+      // Format current date for filename
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).replace(/\//g, '-');
+      
       // Start report generation in background
       generateReport({
         cloudProvider: provider,
@@ -171,11 +179,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         accountName: accountName,
         frequency: frequency as "daily" | "weekly" | undefined,
         month: metadata.month,
-        year: metadata.year
+        year: metadata.year,
+        outputFilename: `${accountName}-${formattedDate}-${frequency || 'daily'}-report.pdf`
       }).then(async (result) => {
         if (result.success && result.filePath) {
           // Update report status to completed with file path
           await storage.updateReportStatus(report.id, "completed", result.filePath);
+          
+          // Set timeout to delete the file after 2 minutes
+          setTimeout(() => {
+            fs.unlink(result.filePath, async (err) => {
+              if (err) {
+                console.error("Error deleting report file:", err);
+                return;
+              }
+              console.log(`Deleted report file: ${result.filePath}`);
+              await storage.updateReportStatus(report.id, "expired");
+            });
+          }, 2 * 60 * 1000); // 2 minutes in milliseconds
         } else {
           // Update report status to failed
           await storage.updateReportStatus(report.id, "failed");

@@ -510,13 +510,31 @@ def generate_pdf_report(account_name, metrics_data=None, cloud_provider='AWS',
     # Create a buffer for the PDF
     buffer = io.BytesIO()
     
+    # Define header function for all pages
+    def header(canvas, doc):
+        canvas.saveState()
+        # Draw border around page
+        canvas.rect(doc.leftMargin - 10, doc.bottomMargin - 10,
+                   doc.width + 20, doc.height + 20)
+        
+        # Add website URL on the left
+        canvas.setFont('Helvetica', 8)
+        canvas.drawString(doc.leftMargin, doc.height + doc.topMargin - 12, "www.nubinix.com")
+        
+        # Add logo on the right
+        logo_path = os.path.join(os.getcwd(), 'public', 'nubinix-icon.png')
+        if os.path.exists(logo_path):
+            canvas.drawImage(logo_path, doc.width + doc.leftMargin - 60, 
+                           doc.height + doc.topMargin - 40, width=40, height=40)
+        canvas.restoreState()
+    
     # Create the PDF document
     doc = SimpleDocTemplate(
         buffer,
         pagesize=letter,
         rightMargin=0.5*inch,
         leftMargin=0.5*inch,
-        topMargin=0.5*inch,
+        topMargin=0.8*inch,  # Increased top margin for header
         bottomMargin=0.5*inch
     )
     
@@ -529,8 +547,8 @@ def generate_pdf_report(account_name, metrics_data=None, cloud_provider='AWS',
     else:  # billing report
         create_billing_report(doc, elements, account_name, cloud_provider, month, year)
     
-    # Build the PDF document
-    doc.build(elements)
+    # Build the PDF document with header template
+    doc.build(elements, onFirstPage=header, onLaterPages=header)
     
     # Get the PDF data
     pdf_data = buffer.getvalue()

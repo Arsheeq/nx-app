@@ -14,6 +14,7 @@ interface GenerateReportParams {
   frequency?: 'daily' | 'weekly';
   month?: number;
   year?: number;
+  outputFilename?: string;
 }
 
 // Main function to generate a report using Python backend
@@ -36,7 +37,7 @@ export async function generateReport(params: GenerateReportParams): Promise<{ su
     
     // Execute Python script
     const pythonScript = path.join(process.cwd(), 'python-backend', 'app.py');
-    const outputPath = path.join(outputDir, `report_${Date.now()}_${crypto.randomBytes(4).toString('hex')}.pdf`);
+    const outputPath = path.join(outputDir, params.outputFilename || `report_${Date.now()}_${crypto.randomBytes(4).toString('hex')}.pdf`);
     
     return new Promise((resolve, reject) => {
       exec(
