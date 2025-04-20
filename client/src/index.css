@@ -8,6 +8,12 @@
   }
 }
 
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent;
+  }
+}
+
 .card-hover {
   transition: all 0.3s ease;
 }
@@ -24,11 +30,75 @@
 
 .button-gradient {
   background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .button-gradient:hover {
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: translateY(-1px);
+  animation: bubble 0.6s ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(61, 179, 227, 0.5), 0 0 10px rgba(104, 102, 193, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(61, 179, 227, 0.7), 0 0 30px rgba(104, 102, 193, 0.5);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(61, 179, 227, 0.5), 0 0 10px rgba(104, 102, 193, 0.3);
+    transform: scale(1);
+  }
+}
+
+.button-bubble {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: #0F172A;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+}
+
+.button-bubble:hover {
+  transform: translateY(-2px);
+}
+
+.button-bubble:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.5s ease;
+}
+
+.button-bubble:hover:before {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0;
+}
+
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(104, 102, 193, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 10px rgba(104, 102, 193, 0.1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(104, 102, 193, 0);
+  }
 }
 
 .step-animation {
