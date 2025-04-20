@@ -58,7 +58,7 @@ export const ReportTypeCard: React.FC<ReportTypeCardProps> = ({
 };
 
 export const ReportTypeSelector: React.FC = () => {
-  const { reportType, setReportType, nextStep } = useStore();
+  const { reportType, setReportType, nextStep, setCurrentStep } = useStore();
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
@@ -102,7 +102,7 @@ export const ReportTypeSelector: React.FC = () => {
         onSelect={() => {
           console.log("Selecting billing report type");
           setReportType("billing");
-          nextStep();
+          setCurrentStep(3); // Go directly to period selection for billing
         }}
       />
     </div>

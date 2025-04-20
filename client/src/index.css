@@ -29,6 +29,28 @@
 
 .button-gradient:hover {
   opacity: 0.9;
+
+/* Logo bounce animation */
+.logo-bounce {
+  transition: transform 0.2s ease-in-out;
+}
+
+.group:hover .logo-bounce {
+  transform: translateY(-5px);
+}
+
+/* Button bubble effect */
+.button-bubble {
+  background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
+  color: white;
+  transition: transform 0.2s ease-in-out;
+}
+
+.button-bubble:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
 }
 
 .step-animation {

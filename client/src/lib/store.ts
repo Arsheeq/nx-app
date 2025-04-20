@@ -121,6 +121,33 @@ export function getSteps(reportType: ReportType): Step[] {
   }
 }
 
+// Helper function to validate current step and determine if we can proceed
+export function canProceedToNextStep(state: StoreState): boolean {
+  const currentStepData = getSteps(state.reportType)[state.currentStep - 1];
+  
+  switch (currentStepData?.id) {
+    case 'cloud-provider':
+      return !!state.cloudProvider;
+    case 'report-type':
+      return !!state.reportType;
+    case 'credentials':
+      if (state.cloudProvider === 'AWS') {
+        return !!state.awsAccessKeyId && !!state.awsSecretAccessKey;
+      }
+      return !!state.azureClientId && !!state.azureClientSecret && !!state.azureTenantId && !!state.azureSubscriptionId;
+    case 'resources':
+      return state.selectedResources.length > 0;
+    case 'frequency':
+      return !!state.frequency;
+    case 'select-period':
+      return !!state.billingMonth && !!state.billingYear;
+    case 'generate':
+      return true;
+    default:
+      return false;
+  }
+}
+
 // Create store
 export const useStore = create<StoreState>((set) => ({
   // Initial state
@@ -160,7 +187,13 @@ export const useStore = create<StoreState>((set) => ({
   setReportType: (type) => set({ reportType: type }),
   setCloudProvider: (provider) => set({ cloudProvider: provider }),
   setCurrentStep: (step) => set({ currentStep: step }),
-  nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
+  nextStep: () => set((state) => {
+    if (!canProceedToNextStep(state)) {
+      return state;
+    }
+    const maxSteps = getSteps(state.reportType).length;
+    return { currentStep: Math.min(state.currentStep + 1, maxSteps) };
+  }),
   prevStep: () => set((state) => ({ currentStep: Math.max(1, state.currentStep - 1) })),
   
   // Credentials

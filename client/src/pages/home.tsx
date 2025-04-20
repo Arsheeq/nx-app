@@ -291,6 +291,76 @@ export default function Home() {
         );
 
       case 'credentials':
+        if (reportType === 'billing' && currentStep === 3) {
+          return (
+            <section>
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gradient">
+                  Select Billing Period
+                </h2>
+                <p className="text-gray-500 mt-2">
+                  Choose the year and month for your billing report
+                </p>
+              </div>
+
+              <Card className="p-6 max-w-md mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="year-select">Year</Label>
+                    <Select 
+                      value={formBillingYear} 
+                      onValueChange={setFormBillingYear}
+                    >
+                      <SelectTrigger id="year-select">
+                        <SelectValue placeholder="Select Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="2024">2024</SelectItem>
+                        <SelectItem value="2025">2025</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="month-select">Month</Label>
+                    <Select 
+                      value={formBillingMonth}
+                      onValueChange={setFormBillingMonth}
+                    >
+                      <SelectTrigger id="month-select">
+                        <SelectValue placeholder="Select Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">January</SelectItem>
+                        <SelectItem value="2">February</SelectItem>
+                        <SelectItem value="3">March</SelectItem>
+                        <SelectItem value="4">April</SelectItem>
+                        <SelectItem value="5">May</SelectItem>
+                        <SelectItem value="6">June</SelectItem>
+                        <SelectItem value="7">July</SelectItem>
+                        <SelectItem value="8">August</SelectItem>
+                        <SelectItem value="9">September</SelectItem>
+                        <SelectItem value="10">October</SelectItem>
+                        <SelectItem value="11">November</SelectItem>
+                        <SelectItem value="12">December</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <div className="text-lg font-medium">
+                    Selected Period: {getMonthName(parseInt(formBillingMonth))} {formBillingYear}
+                  </div>
+                </div>
+              </Card>
+
+              <div className="text-center text-sm text-gray-500 mt-4">
+                Billing data is available for years 2024 and 2025
+              </div>
+            </section>
+          );
+        }
         return (
           <section>
             <div className="text-center mb-8">
