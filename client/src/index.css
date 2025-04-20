@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent;
+  }
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.selected-card {
+  border-color: #3DB3E3;
+  background: linear-gradient(to bottom right, rgba(61, 179, 227, 0.1), rgba(104, 102, 193, 0.1));
+}
+
+.button-gradient {
+  background: linear-gradient(to right, #3DB3E3, #6866C1, #E865A0);
+  transition: opacity 0.3s ease;
+}
+
+.button-gradient:hover {
+  opacity: 0.9;
+}
+
+.step-animation {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Bubble animation for resource selection */
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.group:hover {
+  animation: bubble 0.5s ease-in-out;
+}
+
+.group:hover .logo-bounce {
+  animation: bounce 0.5s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s ease infinite;
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] bg-clip-text text-transparent;
+  }
+
+  .bg-gradient {
+    @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0];
+  }
+
+  .step-item .step-circle {
+    @apply flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 bg-white font-semibold z-10;
+  }
+
+  .step-item.active .step-circle {
+    @apply bg-gradient-to-r from-[#3DB3E3] via-[#6866C1] to-[#E865A0] text-white border-transparent;
+  }
+
+  .step-item.completed .step-circle {
+    @apply bg-green-500 text-white border-transparent;
+  }
+
+  .step-item .step-line {
+    @apply w-full h-1 bg-gray-200 absolute top-5 left-0 -z-10;
+  }
+
+  .step-item.completed .step-line {
+    @apply bg-green-500;
+  }
+}
